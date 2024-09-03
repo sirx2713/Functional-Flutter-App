@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int cardNumber = 1;
+  int cardLeftNumber = 1;
+  int cardRightNumber = 1;
   int playerScore = 0;
   int cpuScore = 0;
   @override
@@ -33,15 +35,24 @@ class _MyAppState extends State<MyApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image(image: AssetImage("images/card$cardNumber.png")),
-                  Image(image: AssetImage("images/card$cardNumber.png"))
+                  Image(image: AssetImage("images/card$cardLeftNumber.png")),
+                  Image(image: AssetImage("images/card$cardRightNumber.png"))
                 ],
               ),
               TextButton(
                 onPressed: () {
                   setState(() {
-                    if(cardNumber <= 13){
-                      cardNumber++;
+                    cardRightNumber = Random().nextInt(14) + 1;
+                    cardLeftNumber = Random().nextInt(14) + 1;
+                    if(cardRightNumber > cardLeftNumber){
+                      playerScore += 5;
+                    }
+                    else if(cardLeftNumber > cardRightNumber){
+                      cpuScore += 5;
+                    }
+                    else if(cardRightNumber == cardLeftNumber){
+                      playerScore += 1;
+                      cpuScore += 1;
                     }
                   });
                 },
